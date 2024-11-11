@@ -1,12 +1,22 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthenticationProvider";
 
 const Login = () => {
+  const { signInUser } = useContext(AuthContext);
+
   const handleLogin = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("ERROR", error.message);
+      });
   };
 
   return (
